@@ -1,0 +1,57 @@
+<div class="flex justify-between items-center mb-6">
+  <h2 class="text-2xl font-bold">Employees List</h2>
+  <a
+    routerLink="/new"
+    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+  >
+    Add Employee
+  </a>
+</div>
+
+<!-- Search Input -->
+<div class="mb-4">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Search by name, position, or level..."
+    class="w-full max-w-md px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
+<!-- Employee Table -->
+<table class="w-full text-left border-collapse border border-gray-200">
+  <thead>
+    <tr class="bg-gray-100">
+      <th class="p-3 border">Name</th>
+      <th class="p-3 border">Position</th>
+      <th class="p-3 border">Level</th>
+      <th class="p-3 border">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of filteredEmployees" class="hover:bg-gray-50">
+      <td class="p-3 border">{{ employee.name }}</td>
+      <td class="p-3 border">{{ employee.position }}</td>
+      <td class="p-3 border capitalize">{{ employee.level }}</td>
+      <td class="p-3 border space-x-2">
+        <a
+          [routerLink]="['/edit', employee._id]"
+          class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+        >
+          Edit
+        </a>
+        <button
+          (click)="employee._id && deleteEmployee(employee._id)"
+          class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="filteredEmployees.length === 0">
+      <td colspan="4" class="p-4 text-center text-gray-500">
+        No matching employees found.
+      </td>
+    </tr>
+  </tbody>
+</table>
